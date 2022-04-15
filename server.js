@@ -83,16 +83,14 @@ io.on("connection", (client) => {
     startInterval(roomName);
   }
 
-  function handleNext(roomname, sentence) {
+  function handleNext(roomname, word) {
     let currentplayer = state[roomname].currentPlayer;
     let players = state[roomname].players;
     if (!state[roomname].running) {
       state[roomname].running = true;
     }
     state[roomname].currentPlayer = calculateNextTurn(players, currentplayer);
-    state[roomname].currentSentence = sentence;
-
-    // console.log(state[roomname].currentSentence);
+    state[roomname].currentSentence += ` ${word}`;
 
     io.sockets.in(roomname).emit("continue", state[roomname]);
   }
